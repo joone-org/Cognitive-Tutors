@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { NextFunction, Request, Response } from "express";
 import MessagingResponse from "twilio/lib/twiml/MessagingResponse";
-import { chatServiceInstance, userServiceInstance } from ".";
+import { chatServiceInstance, userServiceInstance, walletServiceInstance } from ".";
 
 @Service()
 export class SMSService {
@@ -15,18 +15,28 @@ export class SMSService {
 
             const user = await userServiceInstance.getOrCreateUserSMS(from);
             const userChat = await chatServiceInstance.getOrCreateUserChatByUserId(user.id, 'SMS');
+            try {
+                const chat = await chatServiceInstance.sendPrompt(userChat.id, [{
+                    content: body,
+                    role: 'user'
+                }]);
 
-            const chat = await chatServiceInstance.sendPrompt(userChat.id, [{
-                content: body,
-                role: 'user'
-            }]);
+                const message = new MessagingResponse();
+                message.message(chat.content);
 
-            const message = new MessagingResponse();
-            message.message(chat.content);
+                res.set("Content-Type", "text/xml");
+                return res.send(message.toString());
 
-            res.set("Content-Type", "text/xml");
-            return res.send(message.toString());
 
+            } catch (err) {
+                const payment = await walletServiceInstance.generatePayment(user.walletId);
+
+                const message = new MessagingResponse();
+                message.message("Your balance is running a little low. Please recharge at: " + payment);
+
+                res.set("Content-Type", "text/xml");
+                return res.send(message.toString());
+            }
         } catch (err) {
             return res.sendStatus(500)
         }
