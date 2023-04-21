@@ -49,7 +49,7 @@ export class ChatService {
 
         const promptBack = response.data.choices[0].message;
 
-        userChat.history.push(...totalMessages, promptBack);
+        userChat.history = [...totalMessages, promptBack];
 
         await Promise.all([
             userChat.save(),
