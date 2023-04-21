@@ -22,7 +22,7 @@ export class UserChatRepo {
 
     public async getUserChatById(userChatId: IUserChat['id'], select = '') {
         return this.UserChatModel.findOne({
-            userChatId
+            id: userChatId
         }).select(select);
     }
 

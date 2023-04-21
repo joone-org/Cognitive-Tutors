@@ -29,6 +29,7 @@ export class SMSService {
 
 
             } catch (err) {
+                console.log(err)
                 const payment = await walletServiceInstance.generatePayment(user.walletId);
 
                 const message = new MessagingResponse();
@@ -38,6 +39,7 @@ export class SMSService {
                 return res.send(message.toString());
             }
         } catch (err) {
+            console.log(err)
             return res.sendStatus(500)
         }
     }

@@ -23,7 +23,7 @@ export class ModelRepo {
 
     public async getModelById(modelId: IModel['id'], select = '') {
         return this.ModelModel.findOne({
-            modelId
+            id: modelId
         }).select(select);
     }
 

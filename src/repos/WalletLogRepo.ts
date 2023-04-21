@@ -23,7 +23,7 @@ export class WalletLogRepo {
 
     public async getWalletLogById(walletLogId: IWalletLog['id'], select = '') {
         return this.WalletLogModel.findOne({
-            walletLogId
+            id: walletLogId
         }).select(select);
     }
 

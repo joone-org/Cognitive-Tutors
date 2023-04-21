@@ -29,7 +29,7 @@ export class UserRepo {
 
     public async getUserById(userId: IUser['id'], select = '-password -_id -__v') {
         return this.UserModel.findOne({
-            userId
+            id: userId
         }).select(select);
     }
 

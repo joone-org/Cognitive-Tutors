@@ -23,7 +23,7 @@ export class PaymentRepo {
 
     public async getPaymentById(paymentId: IPayment['id'], select = '') {
         return this.PaymentModel.findOne({
-            paymentId
+            id: paymentId
         }).select(select);
     }
 

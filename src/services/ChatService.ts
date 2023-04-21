@@ -22,7 +22,6 @@ export class ChatService {
     }
 
     public async sendPrompt(userChatId: string, newMessages: IMessage[]) {
-
         const userChat = await this.getUserChatById(userChatId);
         const subscription = await this.getSubscriptionById(userChat.subscriptionId);
         const model = await this.getModelById(subscription.modelId);
@@ -31,7 +30,6 @@ export class ChatService {
         const totalMessages = userChat.history.concat(newMessages);
 
         const canAffordCall = await walletServiceInstance.canUserAffordChat(user, subscription, this.messagesToString(totalMessages));
-
         if (!canAffordCall) {
             throw Error("Available Balance Low. Please Recharge.")
         }

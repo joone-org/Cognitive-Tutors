@@ -23,7 +23,7 @@ export class SubscriptionRepo {
 
     public async getSubscriptionById(subscriptionId: ISubscription['id'], select = '') {
         return this.SubscriptionModel.findOne({
-            subscriptionId
+            id: subscriptionId
         }).select(select);
     }
 
