@@ -27,12 +27,19 @@ export class ChatService {
         const model = await this.getModelById(subscription.modelId);
 
         const user = await userServiceInstance.getUserById(userChat.userId);
-        const totalMessages = userChat.history.concat(newMessages);
+        let totalMessages = userChat.history.concat(newMessages);
 
         const canAffordCall = await walletServiceInstance.canUserAffordChat(user, subscription, this.messagesToString(totalMessages));
         if (!canAffordCall) {
             throw Error("Available Balance Low. Please Recharge.")
         }
+
+        totalMessages = totalMessages.map(_ => {
+            return {
+                content: _.content,
+                role: _.role
+            }
+        })
 
         const response = await this.openai.createChatCompletion({
             model: model.toObject().baseModelName,
