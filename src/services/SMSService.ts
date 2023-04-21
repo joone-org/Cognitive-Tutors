@@ -29,7 +29,7 @@ export class SMSService {
 
 
             } catch (err) {
-                console.log(err)
+                console.log(err.response.data)
                 const payment = await walletServiceInstance.generatePayment(user.walletId);
 
                 const message = new MessagingResponse();
