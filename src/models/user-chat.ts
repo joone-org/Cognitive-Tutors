@@ -5,7 +5,7 @@ import message from "./schemas/message";
 const userChatSchema = new Schema({
     id: String,
     userId: String,
-    histroy: [message],
+    history: [message],
     subscriptionId: String,
     pipe: {
         type: String,

@@ -5,7 +5,7 @@ const modelSchema = new Schema({
     id: String,
     name: String,
     setting: Object,
-    propt: String,
+    prompt: String,
     variables: [{
         name: String,
         type: {

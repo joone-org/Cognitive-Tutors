@@ -15,7 +15,7 @@ export class ChatService {
     constructor() {
 
         const configuration = new Configuration({
-            apiKey: config.openAIKey,
+            apiKey: config.openAIKey
         });
         this.openai = new OpenAIApi(configuration);
 
@@ -35,9 +35,10 @@ export class ChatService {
         }
 
         const response = await this.openai.createChatCompletion({
-            model: model.baseModelName,
+            model: model.toObject().baseModelName,
             messages: totalMessages
         });
+
 
         const promptBack = response.data.choices[0].message;
 
