@@ -70,6 +70,7 @@ export class WalletService {
             success_url: config.baseUrl + "/api/purchase/confirm?id=" + paymentId,
             cancel_url: config.baseUrl + "/api/purchase/cancel?id=" + paymentId,
             payment_method_types: ['card'],
+            mode: "payment",
             line_items: this.PAYMOUNT_ITEMS.map(item => {
                 return {
                     price_data: {

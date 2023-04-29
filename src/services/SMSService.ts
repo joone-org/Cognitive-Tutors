@@ -29,11 +29,10 @@ export class SMSService {
 
 
             } catch (err) {
-                console.log(err.response.data)
-                const payment = await walletServiceInstance.generatePayment(user.walletId);
+                const paymentUrl = await walletServiceInstance.generatePayment(user.walletId);
 
                 const message = new MessagingResponse();
-                message.message("Your balance is running a little low. Please recharge at: " + payment);
+                message.message("Your balance is running a little low. Please recharge at: " + paymentUrl);
 
                 res.set("Content-Type", "text/xml");
                 return res.send(message.toString());
