@@ -1,8 +1,10 @@
+import { IMessage } from "./IMessage"
+
 export interface IModel {
     id: string,
     name: string,
     settings: object,
-    prompt: string,
+    defaultPrompt: IMessage[],
     variables: {
         name: string,
         type: 'TEXT' | 'SELECT',

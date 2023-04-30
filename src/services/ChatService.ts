@@ -41,7 +41,12 @@ export class ChatService {
             }
         })
 
+        let settings = model.settings;
+
+        if (!settings) settings = {};
+
         const response = await this.openai.createChatCompletion({
+            ...settings,
             model: model.toObject().baseModelName,
             messages: totalMessages
         });
@@ -72,12 +77,17 @@ export class ChatService {
 
         if (userChat.length) return userChat[0];
 
+        const subscriptionId = 'DEFAULT_' + pipe;
+
+        const subscription = await this.getSubscriptionById(subscriptionId);
+        const model = await this.getModelById(subscription.modelId);
+
         return userChatRepo.create({
-            history: [],
+            history: model.defaultPrompt,
             id: generateId(),
             pipe,
             status: 'ACTIVE',
-            subscriptionId: 'DEFAULT_' + pipe,
+            subscriptionId: subscriptionId,
             userId
         })
     }

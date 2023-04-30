@@ -1,11 +1,12 @@
 import { Document, model, Schema } from "mongoose";
 import { IModel } from "../interfaces/IModel";
+import message from "./schemas/message";
 
 const modelSchema = new Schema({
     id: String,
     name: String,
     setting: Object,
-    prompt: String,
+    defaultPrompt: [message],
     variables: [{
         name: String,
         type: {
